@@ -15,6 +15,33 @@ class StationTableViewCell: UITableViewCell {
     @IBOutlet weak var SongName: UILabel!
     @IBOutlet weak var SongArtist: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var addToPlaylistButton: UIButton!
+    
+    @IBAction func addToPlaylist(sender: AnyObject) {
+        
+        let searchQuery = "track:\(SongName.text!) artist:\(SongArtist.text!)"
+        
+        SPTSearch.performSearchWithQuery(searchQuery, queryType: SPTSearchQueryType.QueryTypeTrack, accessToken: nil, callback: { (error, object) in
+            if error == nil {
+                let result = object as! SPTListPage
+                
+                if result.items != nil{
+                
+                    let track = result.items[0] as! SPTPartialTrack
+                    
+                    var artist = ""
+                    for i in track.artists{
+                        let a = i as! SPTPartialArtist
+                        artist += a.name
+                    }
+                    print("\(track.name) by \(artist), on \(track.album.name)")
+                }
+                else{
+                    print("No matching track found")
+                }
+            }
+        })
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

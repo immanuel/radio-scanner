@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Stations-->
@@ -34,7 +35,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hn4-9J-lG2">
-                                            <rect key="frame" x="97" y="34" width="495" height="21"/>
+                                            <rect key="frame" x="97" y="34" width="387" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -45,12 +46,26 @@
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ngz-L6-UT6">
                                             <rect key="frame" x="97" y="61" width="20" height="20"/>
                                         </activityIndicatorView>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPx-vC-0YO">
+                                            <rect key="frame" x="492" y="30" width="97" height="30"/>
+                                            <state key="normal" title="Add to playlist"/>
+                                            <connections>
+                                                <action selector="addToPlaylist:" destination="S4d-k1-oBd" eventType="touchUpInside" id="fBN-4Y-geo"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="SPx-vC-0YO" firstAttribute="top" secondItem="ZDV-32-INF" secondAttribute="topMargin" constant="22" id="V7T-1Q-D07"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="SPx-vC-0YO" secondAttribute="trailing" constant="3" id="aPJ-ii-4CX"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="SPx-vC-0YO" secondAttribute="trailing" constant="3" id="tpu-yB-WTh"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="SPx-vC-0YO" secondAttribute="bottom" constant="21.5" id="yZn-ge-xO7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="SongArtist" destination="Hn4-9J-lG2" id="Ndt-lO-uoe"/>
                                     <outlet property="SongName" destination="2ph-6q-gYs" id="XRi-Oz-gbh"/>
                                     <outlet property="StationImage" destination="XyM-KI-F49" id="Gm9-Kf-ciN"/>
+                                    <outlet property="addToPlaylistButton" destination="SPx-vC-0YO" id="vA4-Mo-5DT"/>
                                     <outlet property="loadingSpinner" destination="ngz-L6-UT6" id="G44-tu-vPJ"/>
                                 </connections>
                             </tableViewCell>

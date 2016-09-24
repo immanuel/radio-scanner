@@ -10,10 +10,14 @@ import UIKit
 
 class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
     
+    // TODO: Change state to enum
     var spotifyState = 0;
+    
     var selectedPlaylist :SPTPartialPlaylist?
     var stations = [Station]()
     var spotifySession: SPTSession?
+    
+    var playlistViewController :PlaylistTableViewController?
 
     @IBOutlet weak var loginButton: UIBarButtonItem!
 
@@ -38,7 +42,17 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         print("View did appear")
         //startSpotifyLogin()
         if selectedPlaylist != nil {
-            print("We have a default playlist: \(selectedPlaylist?.name)")
+            if spotifyState == 1 {spotifyState == 2}
+            
+            for stationIndex in 0..<stations.count{
+                let indexPath = NSIndexPath(forRow: stationIndex, inSection: 0)
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+                
+                if cell != nil {
+                    let stationCell = cell as! StationTableViewCell
+                    stationCell.addToPlaylistButton.hidden = false
+                }
+            }
         }
     }
 
@@ -68,13 +82,11 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             let cell = self.tableView.cellForRowAtIndexPath(indexPath)
             
             if cell == nil {
-                print("\(stationIndex) No animation")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.stations[stationIndex].fetchCurrentSongAndArtist()
                 }
             }
             else {
-                print("\(stationIndex) Animation ")
                 let stationCell = cell as! StationTableViewCell
                 stationCell.loadingSpinner.startAnimating()
                 
@@ -106,30 +118,35 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             self.definesPresentationContext = true
             self.presentViewController(authvc, animated: true, completion: nil)
         }
+        else if self.spotifyState == 1 {
+            self.navigationController?.pushViewController(self.playlistViewController!, animated: true)
+        }
     }
     
     func authenticationViewController(authenticationViewController: SPTAuthViewController!, didLoginWithSession session: SPTSession!) {
-        print("Login")
-        loginButton.title = "Choose Playlist"
+
+        loginButton.title = "Select Playlist"
         self.spotifyState = 1
-        print("Expires on \(session.expirationDate)")
+        
+        // TODO: Get new token if expired
         self.spotifySession = session
         
         SPTPlaylistList.playlistsForUserWithSession(session, callback: { (error, object) in
             if error == nil {
-                print("Got it")
                 let playlists = object as! SPTPlaylistList
                 print(playlists.hasNextPage)
                 
-                let vc = self.storyboard?.instantiateViewControllerWithIdentifier("playlistView") as! PlaylistTableViewController
+                self.playlistViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("playlistView") as! PlaylistTableViewController)
                 
+                // TODO: Handle no playlists
                 for item in playlists.items{
                     let pl = item as! SPTPartialPlaylist
-                    print(pl.name)
-                    vc.playlists.append(pl)
+                    self.playlistViewController!.playlists.append(pl)
                 }
                 
-                self.navigationController?.pushViewController(vc, animated: true)
+                self.playlistViewController!.selectedPlaylist = self.selectedPlaylist
+                
+                self.navigationController?.pushViewController(self.playlistViewController!, animated: true)
                 
             }
         })
@@ -167,7 +184,6 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         cell.StationImage.image = station.photo
         let currSong = station.getCurrentSongAndArtist()
         if currSong.artist == nil {
-            print("\(indexPath.row) Get animation")
             cell.loadingSpinner.startAnimating()
             
             dispatch_async(dispatch_get_main_queue()) {
@@ -176,6 +192,12 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             }
         }
         (cell.SongName.text, cell.SongArtist.text) = currSong
+        
+        if spotifyState == 2 {
+            cell.addToPlaylistButton.hidden = false
+        } else {
+            cell.addToPlaylistButton.hidden = true
+        }
 
         return cell
     }
