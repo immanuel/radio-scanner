@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -10,20 +11,20 @@
         <scene sceneID="QFt-o6-fmL">
             <objects>
                 <tableViewController id="a0p-Sv-Cx2" customClass="StationTableViewController" customModule="RadioScanner" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="gDj-ad-aVL">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="28" sectionFooterHeight="28" id="gDj-ad-aVL">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="StationTableViewCell" rowHeight="90" id="S4d-k1-oBd" customClass="StationTableViewCell" customModule="RadioScanner" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="90"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="StationTableViewCell" rowHeight="70" id="S4d-k1-oBd" customClass="StationTableViewCell" customModule="RadioScanner" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S4d-k1-oBd" id="ZDV-32-INF">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="89.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ph-6q-gYs">
-                                            <rect key="frame" x="97" y="5" width="492" height="21"/>
+                                            <rect key="frame" x="72" y="0.0" width="520" height="21"/>
                                             <attributedString key="attributedText">
                                                 <fragment content="Label">
                                                     <attributes>
@@ -35,30 +36,35 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hn4-9J-lG2">
-                                            <rect key="frame" x="97" y="34" width="387" height="21"/>
+                                            <rect key="frame" x="72" y="23" width="415" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XyM-KI-F49">
-                                            <rect key="frame" x="0.0" y="0.0" width="89.5" height="89.5"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XyM-KI-F49">
+                                            <rect key="frame" x="0.0" y="0.0" width="69.5" height="69.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="XyM-KI-F49" secondAttribute="height" multiplier="1:1" id="349-dS-e32"/>
+                                            </constraints>
                                         </imageView>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ngz-L6-UT6">
-                                            <rect key="frame" x="97" y="61" width="20" height="20"/>
-                                        </activityIndicatorView>
-                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPx-vC-0YO">
-                                            <rect key="frame" x="492" y="30" width="97" height="30"/>
-                                            <state key="normal" title="Add to playlist"/>
+                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SPx-vC-0YO">
+                                            <rect key="frame" x="534" y="23" width="22" height="22"/>
                                             <connections>
                                                 <action selector="addToPlaylist:" destination="S4d-k1-oBd" eventType="touchUpInside" id="fBN-4Y-geo"/>
                                             </connections>
                                         </button>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ngz-L6-UT6">
+                                            <rect key="frame" x="536" y="24" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="SPx-vC-0YO" firstAttribute="top" secondItem="ZDV-32-INF" secondAttribute="topMargin" constant="22" id="V7T-1Q-D07"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="SPx-vC-0YO" secondAttribute="trailing" constant="3" id="aPJ-ii-4CX"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="SPx-vC-0YO" secondAttribute="trailing" constant="3" id="tpu-yB-WTh"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="SPx-vC-0YO" secondAttribute="bottom" constant="21.5" id="yZn-ge-xO7"/>
+                                        <constraint firstItem="ngz-L6-UT6" firstAttribute="top" secondItem="ZDV-32-INF" secondAttribute="topMargin" constant="12" id="5Tp-ig-x17"/>
+                                        <constraint firstItem="SPx-vC-0YO" firstAttribute="top" secondItem="ZDV-32-INF" secondAttribute="topMargin" constant="11" id="5yN-53-Wag"/>
+                                        <constraint firstItem="SPx-vC-0YO" firstAttribute="trailing" secondItem="ZDV-32-INF" secondAttribute="trailingMargin" id="LNX-VV-iKX"/>
+                                        <constraint firstItem="XyM-KI-F49" firstAttribute="leading" secondItem="ZDV-32-INF" secondAttribute="leadingMargin" constant="-8" id="QF6-Wy-zwk"/>
+                                        <constraint firstItem="XyM-KI-F49" firstAttribute="top" secondItem="ZDV-32-INF" secondAttribute="topMargin" constant="-8" id="Scp-rS-HaQ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ngz-L6-UT6" secondAttribute="trailing" constant="1" id="WE8-9F-XMf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="XyM-KI-F49" secondAttribute="bottom" constant="-8" id="r2D-WU-zCr"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

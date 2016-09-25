@@ -21,6 +21,9 @@ class StationTableViewCell: UITableViewCell {
     
     @IBAction func addToPlaylist(sender: AnyObject) {
         
+        addToPlaylistButton.hidden = true
+        loadingSpinner.startAnimating()
+        
         let searchQuery = "track:\(SongName.text!) artist:\(SongArtist.text!)"
         
         SPTSearch.performSearchWithQuery(searchQuery, queryType: SPTSearchQueryType.QueryTypeTrack, accessToken: nil, callback: { (error, object) in
@@ -36,8 +39,8 @@ class StationTableViewCell: UITableViewCell {
                         let a = i as! SPTPartialArtist
                         artist += a.name
                     }
-                    //print("\(track.name) by \(artist), on \(track.album.name)")
-                    print("\(track.name) - \(track.uri)")
+                    
+                    print("Adding '\(track.name)' by \(artist) to '\(self.parentTableViewController?.selectedFullPlaylist?.name)'")
                     
                     var tracks = [SPTPartialTrack]()
                     tracks.append(track)
@@ -45,19 +48,26 @@ class StationTableViewCell: UITableViewCell {
                     self.parentTableViewController?.selectedFullPlaylist!.addTracksToPlaylist(tracks, withSession: self.parentTableViewController?.spotifySession!, callback: {(error) in
                         if error != nil{
                             print("Error addding track to playlist")
+                            print(error)
+                            
                         } else {
                             print("Added track to playlist")
                         }
+                        self.loadingSpinner.stopAnimating()
+                        self.addToPlaylistButton.hidden = false
                     })
-                    
-                    
                 }
                 else{
                     print("No matching track found")
+                    self.loadingSpinner.stopAnimating()
+                    self.addToPlaylistButton.hidden = false
                 }
-                
-                
-                
+            }
+            else{
+                print("Error searching for track")
+                print(error)
+                self.loadingSpinner.stopAnimating()
+                self.addToPlaylistButton.hidden = false
             }
         })
     }

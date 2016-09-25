@@ -40,17 +40,13 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
-        print("View did appear")
-        //startSpotifyLogin()
         if selectedPlaylist != nil {
-            if spotifyState == 1 {spotifyState == 2}
+            if spotifyState == 1 {spotifyState = 2}
             
             SPTPlaylistSnapshot.playlistWithURI(selectedPlaylist?.uri, session: spotifySession, callback: {(error, object) in
                 if error == nil{
-                    
                     // TODO: Don't display add to playlist if the playlist call fails
                     self.selectedFullPlaylist = object as? SPTPlaylistSnapshot
-                    print("Got full playlist \(self.selectedFullPlaylist?.name)")
                 }
             })
             
@@ -99,11 +95,13 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             else {
                 let stationCell = cell as! StationTableViewCell
                 stationCell.loadingSpinner.startAnimating()
+                stationCell.addToPlaylistButton.hidden = true
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     
                     (stationCell.SongName.text, stationCell.SongArtist.text) = self.stations[stationIndex].fetchCurrentSongAndArtist()
                     stationCell.loadingSpinner.stopAnimating()
+                    if self.spotifyState == 2 { stationCell.addToPlaylistButton.hidden = false}
                 }
             }
         }
@@ -114,6 +112,8 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
     
     @IBAction func loginButtonClick(sender: AnyObject) {
         if(self.spotifyState == 0){
+            
+            // TODO: Doublecheck auth workflow  
             let auth = SPTAuth.defaultInstance()
             auth.clientID        = "f3557a5d6af84c85964a2e82bf61ba7c"
             auth.redirectURL     = NSURL.init(string:"radiotuner://logincallback")
@@ -128,7 +128,7 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             self.definesPresentationContext = true
             self.presentViewController(authvc, animated: true, completion: nil)
         }
-        else if self.spotifyState == 1 {
+        else {
             self.navigationController?.pushViewController(self.playlistViewController!, animated: true)
         }
     }
@@ -197,20 +197,20 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         let currSong = station.getCurrentSongAndArtist()
         if currSong.artist == nil {
             cell.loadingSpinner.startAnimating()
+            cell.addToPlaylistButton.hidden = true
             
             dispatch_async(dispatch_get_main_queue()) {
                 (cell.SongName.text, cell.SongArtist.text) = station.fetchCurrentSongAndArtist()
                 cell.loadingSpinner.stopAnimating()
+                if self.spotifyState == 2 { cell.addToPlaylistButton.hidden = false}
             }
         }
-        (cell.SongName.text, cell.SongArtist.text) = currSong
-        
-        if spotifyState == 2 {
-            cell.addToPlaylistButton.hidden = false
-        } else {
-            cell.addToPlaylistButton.hidden = true
+        else {
+            if spotifyState == 2 { cell.addToPlaylistButton.hidden = false}
+            else {cell.addToPlaylistButton.hidden = true}
         }
         
+        (cell.SongName.text, cell.SongArtist.text) = currSong
         cell.parentTableViewController = self
 
         return cell
