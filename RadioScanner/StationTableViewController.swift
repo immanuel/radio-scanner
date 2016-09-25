@@ -14,6 +14,7 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
     var spotifyState = 0;
     
     var selectedPlaylist :SPTPartialPlaylist?
+    var selectedFullPlaylist :SPTPlaylistSnapshot?
     var stations = [Station]()
     var spotifySession: SPTSession?
     
@@ -43,6 +44,15 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         //startSpotifyLogin()
         if selectedPlaylist != nil {
             if spotifyState == 1 {spotifyState == 2}
+            
+            SPTPlaylistSnapshot.playlistWithURI(selectedPlaylist?.uri, session: spotifySession, callback: {(error, object) in
+                if error == nil{
+                    
+                    // TODO: Don't display add to playlist if the playlist call fails
+                    self.selectedFullPlaylist = object as? SPTPlaylistSnapshot
+                    print("Got full playlist \(self.selectedFullPlaylist?.name)")
+                }
+            })
             
             for stationIndex in 0..<stations.count{
                 let indexPath = NSIndexPath(forRow: stationIndex, inSection: 0)
@@ -107,7 +117,7 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             let auth = SPTAuth.defaultInstance()
             auth.clientID        = "f3557a5d6af84c85964a2e82bf61ba7c"
             auth.redirectURL     = NSURL.init(string:"radiotuner://logincallback")
-            auth.requestedScopes = [SPTAuthPlaylistModifyPrivateScope]
+            auth.requestedScopes = [SPTAuthPlaylistModifyPrivateScope, SPTAuthPlaylistModifyPublicScope]
             
             let authvc = SPTAuthViewController.authenticationViewController()
             authvc.modalPresentationStyle   = UIModalPresentationStyle.OverFullScreen
@@ -134,7 +144,9 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         SPTPlaylistList.playlistsForUserWithSession(session, callback: { (error, object) in
             if error == nil {
                 let playlists = object as! SPTPlaylistList
-                print(playlists.hasNextPage)
+                
+                // TODO: Handle multilpe pages of playlists
+                // print(playlists.hasNextPage)
                 
                 self.playlistViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("playlistView") as! PlaylistTableViewController)
                 
@@ -198,6 +210,8 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         } else {
             cell.addToPlaylistButton.hidden = true
         }
+        
+        cell.parentTableViewController = self
 
         return cell
     }

@@ -17,6 +17,8 @@ class StationTableViewCell: UITableViewCell {
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var addToPlaylistButton: UIButton!
     
+    weak var parentTableViewController :StationTableViewController?
+    
     @IBAction func addToPlaylist(sender: AnyObject) {
         
         let searchQuery = "track:\(SongName.text!) artist:\(SongArtist.text!)"
@@ -34,11 +36,28 @@ class StationTableViewCell: UITableViewCell {
                         let a = i as! SPTPartialArtist
                         artist += a.name
                     }
-                    print("\(track.name) by \(artist), on \(track.album.name)")
+                    //print("\(track.name) by \(artist), on \(track.album.name)")
+                    print("\(track.name) - \(track.uri)")
+                    
+                    var tracks = [SPTPartialTrack]()
+                    tracks.append(track)
+
+                    self.parentTableViewController?.selectedFullPlaylist!.addTracksToPlaylist(tracks, withSession: self.parentTableViewController?.spotifySession!, callback: {(error) in
+                        if error != nil{
+                            print("Error addding track to playlist")
+                        } else {
+                            print("Added track to playlist")
+                        }
+                    })
+                    
+                    
                 }
                 else{
                     print("No matching track found")
                 }
+                
+                
+                
             }
         })
     }
