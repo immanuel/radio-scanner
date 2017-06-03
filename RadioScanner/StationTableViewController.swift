@@ -68,15 +68,39 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
     }
     
     // MARK: - Station setup
-    
     func loadStations(){
         
         //let station = Station(name: "", photo: UIImage(named:"")!, code:"")!
-        let station1 = Station(name: "1077 The Bone", photo: UIImage(named: "ksan")!, code: "ksan")!
-        let station2 = Station(name: "98.5 KFOX", photo: UIImage(named: "kufx")!, code:"kufx")!
-        let station3 = Station(name: "Mix 106.5", photo: UIImage(named:"kezr")!, code:"kezr")!
-        let station4 = Station(name: "KFOG", photo: UIImage(named:"kfog")!, code:"kfog")!
-        let station5 = Station(name: "94.5 KBAY", photo: UIImage(named:"kbay")!, code:"kbay")!
+        let station1 = Station(
+            name: "1077 The Bone",
+            photo: UIImage(named: "ksan")!,
+            url: "http://ksan.tunegenie.com",
+            artistXPath: "//div[contains(@class, 'hidden-on-open')]//div[@class='left']/div[2]",
+            songXPath: "(//div[contains(@class, 'hidden-on-open')]//div[@class='song'])[1]")!
+        let station2 = Station(
+            name: "98.5 KFOX",
+            photo: UIImage(named: "kufx")!,
+            url:"http://kufx.tunegenie.com",
+            artistXPath: "//div[contains(@class, 'hidden-on-open')]//div[@class='left']/div[2]",
+            songXPath: "(//div[contains(@class, 'hidden-on-open')]//div[@class='song'])[1]")!
+        let station3 = Station(
+            name: "Mix 106.5",
+            photo: UIImage(named:"kezr")!,
+            url:"http://np.tritondigital.com/public/nowplaying?mountName=KEZRFMAAC&numberToFetch=1&eventType=track",
+            artistXPath: "//property[@name='track_artist_name']",
+            songXPath: "//property[@name='cue_title']")!
+        let station4 = Station(
+            name: "KFOG",
+            photo: UIImage(named:"kfog")!,
+            url:"http://kfog.tunegenie.com",
+            artistXPath: "//div[contains(@class, 'hidden-on-open')]//div[@class='left']/div[2]",
+            songXPath: "(//div[contains(@class, 'hidden-on-open')]//div[@class='song'])[1]")!
+        let station5 = Station(
+            name: "94.5 KBAY",
+            photo: UIImage(named:"kbay")!,
+            url:"http://np.tritondigital.com/public/nowplaying?mountName=KBAYFMAAC&numberToFetch=1&eventType=track",
+            artistXPath: "//property[@name='track_artist_name']",
+            songXPath: "//property[@name='cue_title']")!
         
         stations += [station1, station2, station3, station4, station5]
         

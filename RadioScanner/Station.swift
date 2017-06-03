@@ -11,41 +11,42 @@ import UIKit
 class Station {
     
     var name: String
-    var code: String
+    var url: String
+    var artistXPath: String
+    var songXPath: String
     var currentSong: String?
     var currentArtist: String?
     var photo: UIImage
 
-    init?(name: String, photo: UIImage, code: String){
+    init?(name: String, photo: UIImage, url: String, artistXPath: String, songXPath: String){
         self.name = name
         self.photo = photo
-        self.code = code
+        self.url = url
+        self.artistXPath = artistXPath
+        self.songXPath = songXPath
         
-        if (name.isEmpty || code.isEmpty){
+        if (name.isEmpty || url.isEmpty || artistXPath.isEmpty || songXPath.isEmpty){
             return nil
         }
     }
     
     func fetchCurrentSongAndArtist() -> (song: String?, artist: String?){
         
-        let myURLString = "http://\(self.code).tunegenie.com"
         var myHTMLString:String = ""
-        
-        guard let myURL = NSURL(string: myURLString) else {
-            print("Error: \(myURLString) doesn't seem to be a valid URL")
+        guard let myURL = NSURL(string: url) else {
+            print("Error: \(url) doesn't seem to be a valid URL")
             return (self.currentSong, self.currentArtist)
         }
-        
         do {
             myHTMLString = try String(contentsOfURL: myURL)
         } catch let error as NSError {
             print("Error: \(error)")
         }
         
-        if let doc = HTML(html: myHTMLString, encoding: NSUTF8StringEncoding) {
+        if let doc = XML(xml: myHTMLString, encoding: NSUTF8StringEncoding) {
             
-            let songElement = doc.xpath("(//div[contains(@class, 'hidden-on-open')]//div[@class='song'])[1]")
-            let artistElement = doc.xpath("//div[contains(@class, 'hidden-on-open')]//div[@class='left']/div[2]")
+            let songElement = doc.xpath(songXPath)
+            let artistElement = doc.xpath(artistXPath)
             
             switch songElement {
             case .None:
@@ -59,8 +60,6 @@ class Station {
                         self.currentArtist = artistElement[0].content
                 }
             }
-            
-            
         }
         return (self.currentSong, self.currentArtist)
 
