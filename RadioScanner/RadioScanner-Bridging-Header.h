@@ -13,6 +13,7 @@
 #import <libxml/xpath.h>
 #import <libxml/xpathInternals.h>
 
-#import <Spotify/Spotify.h>
+#import <SpotifyAuthentication/SpotifyAuthentication.h>
+#import <SpotifyMetadata/SpotifyMetadata.h>
 
 #endif /* RadioScanner_Bridging_Header_h */

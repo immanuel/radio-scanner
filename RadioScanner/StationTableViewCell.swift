@@ -26,8 +26,9 @@ class StationTableViewCell: UITableViewCell {
         
         let searchQuery = "track:\(SongName.text!) artist:\(SongArtist.text!)"
         
-        SPTSearch.performSearchWithQuery(searchQuery, queryType: SPTSearchQueryType.QueryTypeTrack, accessToken: nil, callback: { (error, object) in
-            if error == nil {
+        //TODO: Get the accessToken in a better way?
+        SPTSearch.performSearchWithQuery(searchQuery, queryType: SPTSearchQueryType.QueryTypeTrack, accessToken: self.parentTableViewController?.spotifySession?.accessToken, callback: { (error, object) in
+                if error == nil {
                 let result = object as! SPTListPage
                 
                 if result.items != nil{
@@ -45,7 +46,7 @@ class StationTableViewCell: UITableViewCell {
                     var tracks = [SPTPartialTrack]()
                     tracks.append(track)
 
-                    self.parentTableViewController?.selectedFullPlaylist!.addTracksToPlaylist(tracks, withSession: self.parentTableViewController?.spotifySession!, callback: {(error) in
+                    self.parentTableViewController?.selectedFullPlaylist!.addTracksToPlaylist(tracks, withAccessToken: self.parentTableViewController?.spotifySession!.accessToken, callback: {(error) in
                         if error != nil{
                             print("Error addding track to playlist")
                             print(error)

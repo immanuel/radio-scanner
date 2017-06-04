@@ -43,7 +43,7 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         if selectedPlaylist != nil {
             if spotifyState == 1 {spotifyState = 2}
             
-            SPTPlaylistSnapshot.playlistWithURI(selectedPlaylist?.uri, session: spotifySession, callback: {(error, object) in
+            SPTPlaylistSnapshot.playlistWithURI(selectedPlaylist?.uri, accessToken: spotifySession?.accessToken, callback: {(error, object) in
                 if error == nil{
                     // TODO: Don't display add to playlist if the playlist call fails
                     self.selectedFullPlaylist = object as? SPTPlaylistSnapshot
@@ -141,7 +141,7 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
             let auth = SPTAuth.defaultInstance()
             auth.clientID        = "f3557a5d6af84c85964a2e82bf61ba7c"
             auth.redirectURL     = NSURL.init(string:"radiotuner://logincallback")
-            auth.requestedScopes = [SPTAuthPlaylistModifyPrivateScope, SPTAuthPlaylistModifyPublicScope]
+            auth.requestedScopes = [SPTAuthPlaylistReadPrivateScope, SPTAuthPlaylistModifyPrivateScope, SPTAuthPlaylistModifyPublicScope]
             
             let authvc = SPTAuthViewController.authenticationViewController()
             authvc.modalPresentationStyle   = UIModalPresentationStyle.OverFullScreen
@@ -165,8 +165,8 @@ class StationTableViewController: UITableViewController, SPTAuthViewDelegate {
         // TODO: Get new token if expired
         self.spotifySession = session
         
-        SPTPlaylistList.playlistsForUserWithSession(session, callback: { (error, object) in
-            if error == nil {
+        SPTPlaylistList.playlistsForUser(session.canonicalUsername, withAccessToken: session.accessToken, callback: { (error, object) in
+                if error == nil {
                 let playlists = object as! SPTPlaylistList
                 
                 // TODO: Handle multilpe pages of playlists
