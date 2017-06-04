@@ -4,5 +4,5 @@ iOS app to improve local radio exerience.
 - Add the current song to the user's Spotify playlist
 
 # Built using
-- [tid-kijyun's Kanna](https://github.com/tid-kijyun/Kanna): XML/HTML parse
+- [tid-kijyun's Kanna (v1.1.0)](https://github.com/tid-kijyun/Kanna): XML/HTML parse
 - [Spotfiy iOS SDK](https://developer.spotify.com/technologies/spotify-ios-sdk/)
