@@ -16,4 +16,6 @@
 #import <SpotifyAuthentication/SpotifyAuthentication.h>
 #import <SpotifyMetadata/SpotifyMetadata.h>
 
+#import "MBFingerTipWindow.h"
+
 #endif /* RadioScanner_Bridging_Header_h */

@@ -23,6 +23,7 @@
 		354C61241D7D0F130091AA92 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354C61231D7D0F130091AA92 /* SystemConfiguration.framework */; };
 		35BBAD251D95E22C002A9FAE /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BBAD241D95E22C002A9FAE /* PlaylistTableViewController.swift */; };
 		35BBAD271D95E526002A9FAE /* PlaylistTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BBAD261D95E526002A9FAE /* PlaylistTableViewCell.swift */; };
+		9E18687C1EE686FD0008E98F /* MBFingerTipWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E18687B1EE686FD0008E98F /* MBFingerTipWindow.m */; };
 		9EE060D51EE38D4E009BB2EF /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE060D31EE38D4E009BB2EF /* SpotifyAuthentication.framework */; };
 		9EE060D61EE38D4E009BB2EF /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE060D41EE38D4E009BB2EF /* SpotifyMetadata.framework */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,8 @@
 		354C61231D7D0F130091AA92 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		35BBAD241D95E22C002A9FAE /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		35BBAD261D95E526002A9FAE /* PlaylistTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewCell.swift; sourceTree = "<group>"; };
+		9E18687A1EE686FD0008E98F /* MBFingerTipWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFingerTipWindow.h; sourceTree = "<group>"; };
+		9E18687B1EE686FD0008E98F /* MBFingerTipWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFingerTipWindow.m; sourceTree = "<group>"; };
 		9EE060D31EE38D4E009BB2EF /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyAuthentication.framework; path = RadioScanner/SpotifyAuthentication.framework; sourceTree = "<group>"; };
 		9EE060D41EE38D4E009BB2EF /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyMetadata.framework; path = RadioScanner/SpotifyMetadata.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +92,8 @@
 		354C60F31D76A6650091AA92 /* RadioScanner */ = {
 			isa = PBXGroup;
 			children = (
+				9E18687A1EE686FD0008E98F /* MBFingerTipWindow.h */,
+				9E18687B1EE686FD0008E98F /* MBFingerTipWindow.m */,
 				354C61181D76B3AB0091AA92 /* RadioScanner-Bridging-Header.h */,
 				354C60F41D76A6650091AA92 /* AppDelegate.swift */,
 				354C60F81D76A6650091AA92 /* Main.storyboard */,
@@ -186,6 +191,7 @@
 				35BBAD271D95E526002A9FAE /* PlaylistTableViewCell.swift in Sources */,
 				354C60F51D76A6650091AA92 /* AppDelegate.swift in Sources */,
 				354C61161D76B2180091AA92 /* libxmlHTMLNode.swift in Sources */,
+				9E18687C1EE686FD0008E98F /* MBFingerTipWindow.m in Sources */,
 				354C61151D76B2180091AA92 /* libxmlHTMLDocument.swift in Sources */,
 				354C611E1D7BDA680091AA92 /* Station.swift in Sources */,
 				35BBAD251D95E22C002A9FAE /* PlaylistTableViewController.swift in Sources */,

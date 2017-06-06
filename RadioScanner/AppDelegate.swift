@@ -11,10 +11,14 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
+    //var window: UIWindow?
+    var window: UIWindow? = MBFingerTipWindow(frame: UIScreen.mainScreen().bounds)
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        let w = (window as! MBFingerTipWindow)
+        w.alwaysShowTouches = true
+        
         // Override point for customization after application launch.
         return true
     }
